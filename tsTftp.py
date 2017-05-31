@@ -14,7 +14,7 @@ FILE = 'dedication-2.2.sigs.tar.gz'
 def main():
 	try:
 		f = ftplib.FTP(HOST)
-	except (socket.error, socket.gaierror) as e:
+	except (socket.error, socket.gaierror) :
 		print 'ERROR: cannot connect host %s' %HOST
 		return
 	try:
