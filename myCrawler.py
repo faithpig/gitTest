@@ -12,11 +12,11 @@ import robotparser
 import Queue
 
 '''
-下载网页并且输出
-'''
+设置python编码为utf-8,默认为ascii
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+'''
 
 def download(url, user_agent='xc'):
         print 'downloading:', url
