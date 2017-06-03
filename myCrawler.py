@@ -29,21 +29,27 @@ def download(url, user_agent='xc'):
                 html = None
 	return html
 
-def link_crawler(start_url, link_pat):
+def link_crawler(start_url, link_pat, max_depth = 10):#max_depth为爬虫深度
 	'''爬取匹配模式的url页面
 	'''
 	crawl_queue = [start_url]
+	seen =  {} #用字典记录不重复的链接
+	seen[start_url] = 1
 	while crawl_queue:
 		url = crawl_queue.pop()
-		html = download(url, user_agent='xc')
-		for link in get_links(html):
-			if re.match(link_pat, link):
-				link = urlparse.urljoin(start_url, link)
-				crawl_queue.append(link)
+		depth = seen[url]
+		if depth != max_depth:
+			html = download(url, user_agent='xc')
+			for link in get_links(html):
+				if re.match(link_pat, link):
+					link = urlparse.urljoin(start_url, link)
+					if link not in seen:
+						crawl_queue.append(link)
+						seen[link] = depth+1
 def get_links(html):
 	webpage_regex = re.compile('<a[^>]+href=["\'](.*?)["\']', re.IGNORECASE) #这个正则表达式略复杂...匹配了a标签里的链接
 	print webpage_regex.findall(html)
 	return webpage_regex.findall(html)
 
 if __name__ == '__main__':
-        link_crawler('http://xcfish.cn/MyBlog/','.*/home_viewBlog')
+        link_crawler('http://www.xcfish.cn/MyBlog/','.*/home_viewPhoto')
