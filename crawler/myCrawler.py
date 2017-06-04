@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 import robotparser
 import Queue
+from ScrapeCallback import ScrapeCallback
 
 '''
 设置python编码为utf-8,默认为ascii
@@ -29,7 +30,7 @@ def download(url, user_agent='xc'):
                 html = None
 	return html
 
-def link_crawler(start_url, link_pat, max_depth = 10):#max_depth为爬虫深度
+def link_crawler(start_url, link_pat, max_depth = 10, scrape_callback=ScrapeCallback()):#max_depth为爬虫深度
 	'''爬取匹配模式的url页面
 	'''
 	crawl_queue = [start_url]
@@ -40,7 +41,11 @@ def link_crawler(start_url, link_pat, max_depth = 10):#max_depth为爬虫深度
 		depth = seen[url]
 		if depth != max_depth:
 			html = download(url, user_agent='xc')
-			for link in get_links(html):
+			links = []
+			if scrape_callback:
+                		links.extend(scrape_callback(url, html) or [])
+			links += get_links(html)
+			for link in links:
 				if re.match(link_pat, link):
 					link = urlparse.urljoin(start_url, link)
 					if link not in seen:
