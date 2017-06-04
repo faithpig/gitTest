@@ -47,9 +47,9 @@ def link_crawler(start_url, link_pat, max_depth = 10):#max_depth为爬虫深度
 						crawl_queue.append(link)
 						seen[link] = depth+1
 def get_links(html):
-	webpage_regex = re.compile('<a[^>]+href=["\'](.*?)["\']', re.IGNORECASE) #这个正则表达式略复杂...匹配了a标签里的链接
+	webpage_regex = re.compile('<a[^>]+href=["\'](.*?)["\']', re.IGNORECASE) # precompile
 	print webpage_regex.findall(html)
 	return webpage_regex.findall(html)
 
 if __name__ == '__main__':
-        link_crawler('http://www.xcfish.cn/MyBlog/','.*/home_viewPhoto')
+        link_crawler('http://dwhbkp.com/','.*?-view')
