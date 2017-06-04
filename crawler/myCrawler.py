@@ -58,3 +58,4 @@ def get_links(html):
 
 if __name__ == '__main__':
         link_crawler('http://www.163.com/', re.compile(r'http://news\.163.*?/CM\w+(\.html)$')) #下载网易163的新闻网页
+

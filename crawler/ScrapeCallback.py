@@ -35,3 +35,4 @@ class ScrapeCallback:
 
 if __name__ == '__main__':
 	myCrawler.link_crawler('http://www.163.com/', re.compile(r'http://news\.163.*?/CM\w+(\.html)$'), scrape_callback=ScrapeCallback())
+
