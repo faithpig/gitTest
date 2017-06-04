@@ -24,7 +24,7 @@ def download(url, user_agent='xc'):
         headers = {'User-agent':user_agent}
         request = urllib2.Request(url,headers=headers)
         try:
-            	html = urllib2.urlopen(request).read()
+            	html = urllib2.urlopen(request).read().decode('gbk') #解码为gbk编码
         except urllib2.URLError as e:
                 print 'Download error:', e.reason
                 html = None
